@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+.sign-in-form, .register-form {
+    margin: 0 auto;
+    max-width: 360px;
+    padding: 5em 1em;
+    .mat-form-field {
+      display: block;
+      width: 100%;
+    }
+    .row-actions {
+      display: flex;
+      place-content: flex-end;
+    }
+  }
