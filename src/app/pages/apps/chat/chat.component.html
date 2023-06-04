@@ -46,20 +46,20 @@
                         <div class="chat-message-list">
 
                             <ul class="list-unstyled chat-list chat-user-list" id="userList">
-                                <li *ngFor="let data of chatData" [ngClass]="{'active': data.name == username}">
-                                    <a href="javascript: void(0);" (click)="chatUsername(data.name, data.image, data.status)">
+                                <li *ngFor="let data of chatData" [ngClass]="{'active': data.fullname == username}">
+                                    <a href="javascript: void(0);" (click)="chatUsername(data.id,data.fullname)">
                                         <div class="d-flex align-items-center">
                                             <div class="flex-shrink-0 chat-user-img {{data.status}} align-self-center me-2 ms-0">
-                                                <div class="avatar-xxs" *ngIf="data.image">
-                                                    <img src="{{data.image}}" class="rounded-circle img-fluid userprofile" alt="">
+                                                <div class="avatar-xxs" *ngIf="data.profile">
+                                                    <img src="{{data.profile}}" class="rounded-circle img-fluid userprofile" alt="">
                                                 </div>
-                                                <div class="avatar-xxs" *ngIf="!data.image">
-                                                    <span class="avatar-title rounded-circle bg-danger userprofile">{{ data.name.charAt(0) }}</span>
+                                                <div class="avatar-xxs" *ngIf="!data.profile">
+                                                    <span class="avatar-title rounded-circle bg-danger userprofile">{{ data.fullname.charAt(0) }}</span>
                                                 </div>
                                                 <span class="user-status"></span>
                                             </div>
                                             <div class="flex-grow-1 overflow-hidden">
-                                                <p class="text-truncate mb-0">{{data.name}}</p>
+                                                <p class="text-truncate mb-0">{{data.fullname}}</p>
                                             </div>
                                         </div>
                                     </a>
@@ -120,7 +120,7 @@
                             <div class="mt-3" *ngFor="let data of contactData">
                                     <div class="contact-list-title">{{data.title}}</div>
                                     <ul id="contact-sort-A" class="list-unstyled contact-list">
-                                        <li *ngFor="let data of data.contacts" (click)="chatUsername(data.name, data.profile, 'online')">
+                                        <li *ngFor="let data of data.contacts" (click)="chatUsername(1,data.name)">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2">
                                                     <div class="avatar-xxs" *ngIf="data.profile">

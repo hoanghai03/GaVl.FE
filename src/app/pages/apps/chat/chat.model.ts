@@ -36,6 +36,11 @@
     replaymsg?:any;
   }
 
+  export class MessageResponse {
+    public response = 0;
+    public messenge = "";
+  }
+
   /**
  * Contact List
  */

@@ -19,11 +19,9 @@ export class GenQrComponent implements OnInit{
       return response
     })).subscribe(
       response => {
-        debugger
         this.qrCode = response
       }
     );
-    debugger
   }
 
 }

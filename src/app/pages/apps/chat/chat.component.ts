@@ -23,7 +23,8 @@ import { SignalRService } from 'src/app/services/signalR.service';
  */
 export class ChatComponent implements OnInit {
 
-  chatData!: ChatUser[];
+  private _this: ChatComponent;
+  chatData!: any;
   groupData!: GroupUser[];
   chatMessagesData!: any;
   contactData!: ContactModel[];
@@ -33,7 +34,8 @@ export class ChatComponent implements OnInit {
   submitted = false;
   isStatus: string = 'online';
   isProfile: string = 'assets/images/users/avatar-2.jpg';
-  username: any = 'Lisa Parker';
+  username: any = 'Nguyễn Hoàng Hải';
+  receiveId!: string;
   @ViewChild('scrollRef') scrollRef: any;
   isreplyMessage = false;
   emoji = '';
@@ -41,6 +43,7 @@ export class ChatComponent implements OnInit {
   images: { src: string; thumb: string; caption: string }[] = [];
 
   constructor(public signalrService: SignalRService,public formBuilder: UntypedFormBuilder, private lightbox: Lightbox, private offcanvasService: NgbOffcanvas, private datePipe: DatePipe, public chatService: ChatService) {
+    this._this = this;
     for (let i = 1; i <= 24; i++) {
       const src = '../../../../assets/images/small/img-' + i + '.jpg';
       const caption = 'Image ' + i + ' caption here';
@@ -52,7 +55,8 @@ export class ChatComponent implements OnInit {
       };
       this.images.push(item);
     }
-    this.getInfoMessenger();
+    this.getChatData();
+    // this.getInfoMessenger();
   }
 
   async ngOnInit() {
@@ -65,12 +69,15 @@ export class ChatComponent implements OnInit {
     this._fetchData();
 
     this.onListScroll();
-    this.signalrService.connection
-      .invoke('SendMessage','hehe','DisplayMessage')
-      .catch((error: any) => {
-        console.log(`SignalrDemoHub.Hello() error: ${error.toString()}`);
-        alert('SignalrDemoHub.Hello() error!, see console for details.');
-      });
+
+    this.signalrService.connection.on('DisplayMessage', (data: any) => {
+      this._this.chatMessagesData.push(data)
+    });
+
+    this.signalrService.connection.on('ToMe', (data: any) => {
+      data.align = 'right',
+      this._this.chatMessagesData.push(data)
+    });
   }
 
   ngAfterViewInit() {
@@ -80,19 +87,25 @@ export class ChatComponent implements OnInit {
   // Chat Data Fetch
   async _fetchData() {
     this.groupData = groupData;
-    this.chatData = chatData;
+    // this.chatData = chatData;
     // this.chatMessagesData = chatMessagesData;
     this.contactData = contactData;
   }
 
   // hainh2
-  async getInfoMessenger() {
+  async getInfoMessenger(receiveId: number) {
     var param = {
-      sender_Id: 2,
-      receiver_Id: 1
+      receiver_Id: receiveId
     }
     this.chatMessagesData = await this.chatService.postInfoMessenger('http://localhost:5051/api/v1/Messenger/InfoMessenger', param).toPromise();
   }
+
+  // hainh2
+  // Trước hết là lấy tất cả dữ liệu trong user
+  async getChatData() {
+    this.chatData = await this.chatService.getAll('http://localhost:5051/api/v1/User/GetAll').toPromise();
+  }
+
   onListScroll() {
     if (this.scrollRef !== undefined) {
       setTimeout(() => {
@@ -145,13 +158,22 @@ export class ChatComponent implements OnInit {
           content: message,
           formattedDate: this.datePipe.transform(new Date(), "dd/MM/yyyy HH:mm:ss"),
           conversation_id: 1,
-          sender_id: 2,
-          receiver_Id: 1
+          receiver_Id: this.receiveId
         }
         // Message Push in Chat
         this.chatMessagesData.push(messenger);
         // lưu messenge vào csdl
         this.chatService.postInsertMessenger('http://localhost:5051/api/v1/Messenger/InsertMessenger', messenger).subscribe(
+          (res : any)  => {
+              if(res.response > 0) {
+                this.signalrService.connection
+                .invoke('SendMessageToUser',localStorage.getItem('id'),this.receiveId,res.data,'DisplayMessage')
+                .catch((error: any) => {
+                  console.log(`SignalrDemoHub.Hello() error: ${error.toString()}`);
+                  alert('SignalrDemoHub.Hello() error!, see console for details.');
+                });
+              }
+            } 
         );
         this.onListScroll();
         // Set Form Data Reset
@@ -169,24 +191,10 @@ export class ChatComponent implements OnInit {
   /***
   * OnClick User Chat show
   */
-  chatUsername(name: string, profile: any, status: string) {
-    this.isFlag = true;
+  chatUsername(receiveId: number,name: string) {
     this.username = name;
-    this.usermessage = 'Hello';
-    this.chatMessagesData = [];
-    const currentDate = new Date();
-    this.isStatus = status;
-    this.isProfile = profile ? profile : 'assets/images/users/user-dummy-img.jpg';
-    this.chatMessagesData.push({
-      name: this.username,
-      message: this.usermessage,
-      profile: this.isProfile ? this.isProfile : 'assets/images/users/user-dummy-img.jpg',
-      time: currentDate.getHours() + ':' + currentDate.getMinutes(),
-    });
-    const userChatShow = document.querySelector('.user-chat');
-    if (userChatShow != null) {
-      userChatShow.classList.add('user-chat-show');
-    }
+    this.receiveId = receiveId.toString();
+    this.getInfoMessenger(receiveId);
   }
 
   /**

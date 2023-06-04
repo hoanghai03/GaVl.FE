@@ -107,7 +107,6 @@ export class AuthenticationService {
 
     // gen mã code
     genQrCode(id:any): Observable<any> {
-        debugger
         var headerToken = {'Authorization': `Bearer `+ localStorage.getItem('token')};    
         return this.http.get(AUTH_API + `register_code?id=${id}`, {  headers: headerToken, responseType: 'text' });
      }
