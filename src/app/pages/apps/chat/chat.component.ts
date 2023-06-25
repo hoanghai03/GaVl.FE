@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, AfterViewInit, OnChanges, DoCheck } from '@angular/core';
 import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { GroupUser, ChatUser, ContactModel } from './chat.model';
 import { groupData, chatData, contactData } from './data';
@@ -21,7 +21,7 @@ import { SignalRService } from 'src/app/services/signalR.service';
 /**
  * Chat Component
  */
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
 
   private _this: ChatComponent;
   chatData!: any;
@@ -58,6 +58,11 @@ export class ChatComponent implements OnInit {
     this.getChatData();
     // this.getInfoMessenger();
   }
+  ngDoCheck(): void {
+    if(this.chatMessagesData) {
+      this.scrollMessenger()
+    }
+  }
 
   async ngOnInit() {
     // Validation
@@ -87,8 +92,6 @@ export class ChatComponent implements OnInit {
   // Chat Data Fetch
   async _fetchData() {
     this.groupData = groupData;
-    // this.chatData = chatData;
-    // this.chatMessagesData = chatMessagesData;
     this.contactData = contactData;
   }
 
@@ -194,7 +197,20 @@ export class ChatComponent implements OnInit {
   chatUsername(receiveId: number,name: string) {
     this.username = name;
     this.receiveId = receiveId.toString();
-    this.getInfoMessenger(receiveId);
+    this.getInfoMessenger(receiveId);    
+  }
+
+  scrollMessenger() {
+    // Tìm đối tượng thanh scroll trong giao diện tin nhắn
+    const parentElement: HTMLElement | null = document.getElementById('scrollMess');
+    if (parentElement) {
+      // Lấy phần tử con có class 'target-class' trong phần tử cha
+      const targetElement: HTMLElement | null = parentElement.querySelector('.simplebar-content-wrapper');
+      if (targetElement) {
+        // Cuộn thanh scroll xuống cuối cùng
+        targetElement.scrollTo(0, targetElement.scrollHeight);
+      }
+    }
   }
 
   /**

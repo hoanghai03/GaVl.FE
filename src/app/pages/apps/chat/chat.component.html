@@ -235,7 +235,7 @@
                     <!-- end chat user head -->
 
                     <div class="position-relative" id="users-chat">
-                        <ngx-simplebar class="chat-conversation p-3 p-lg-4" #scrollRef>
+                        <ngx-simplebar id="scrollMess" class="chat-conversation p-3 p-lg-4" #scrollRef>
                             <ul class="list-unstyled chat-conversation-list" id="users-conversation">
                                 <li class="chat-list left" *ngFor="let data of chatMessagesData" [ngClass]="{ 'right': data.align === 'right' }">
                                     <div class="conversation-list">
