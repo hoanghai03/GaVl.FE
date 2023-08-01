@@ -6,8 +6,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GlobalComponent } from "../../global-component";
 import { ValidationErrors } from '@angular/forms';
+import { environment } from 'src/environments/environment.prod';
 
-const AUTH_API = GlobalComponent.AUTH_API;
+const AUTH_API = environment.auth_api;
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { Lightbox } from 'ngx-lightbox';
 import { ChatService } from 'src/app/services/product/chat.service';
 import { SignalRService } from 'src/app/services/signalR.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -100,13 +101,13 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
     var param = {
       receiver_Id: receiveId
     }
-    this.chatMessagesData = await this.chatService.postInfoMessenger('http://localhost:5051/api/v1/Messenger/InfoMessenger', param).toPromise();
+    this.chatMessagesData = await this.chatService.postInfoMessenger(environment.api_url+'/Messenger/InfoMessenger', param).toPromise();
   }
 
   // hainh2
   // Trước hết là lấy tất cả dữ liệu trong user
   async getChatData() {
-    this.chatData = await this.chatService.getAll('http://localhost:5051/api/v1/User/GetAll').toPromise();
+    this.chatData = await this.chatService.getAll(environment.api_url + '/User/GetAll').toPromise();
   }
 
   onListScroll() {
@@ -166,7 +167,7 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
         // Message Push in Chat
         this.chatMessagesData.push(messenger);
         // lưu messenge vào csdl
-        this.chatService.postInsertMessenger('http://localhost:5051/api/v1/Messenger/InsertMessenger', messenger).subscribe(
+        this.chatService.postInsertMessenger(environment.api_url+'/Messenger/InsertMessenger', messenger).subscribe(
           (res : any)  => {
               if(res.response > 0) {
                 this.signalrService.connection

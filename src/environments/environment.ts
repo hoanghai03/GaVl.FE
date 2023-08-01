@@ -17,7 +17,8 @@ export const environment = {
   },
 
   api_url: 'http://localhost:5051/api/v1',
-  hub_signalr : 'http://localhost:5051/HubSignalR'
+  hub_signalr : 'http://localhost:5051/HubSignalR',
+  auth_api:"http://localhost:5091/Auth/",
 };
 
 /*
