@@ -60,8 +60,8 @@ export class RegisterComponent implements OnInit {
   }
   initForm() {
     /**
-         * Form Validatyion
-         */
+     * Form Validatyion
+     */
     this.signupForm = this.formBuilder.group({
       username: ['',
         Validators.compose([
@@ -97,6 +97,12 @@ export class RegisterComponent implements OnInit {
    * Register submit form
    */
   onSubmit() {
+
+    this.signupForm.markAllAsTouched();
+    if(!this.signupForm.valid) {
+      return
+    }
+
     this.submitted = true;
 
     //Register Api

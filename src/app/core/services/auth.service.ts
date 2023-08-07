@@ -6,8 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GlobalComponent } from "../../global-component";
 import { ValidationErrors } from '@angular/forms';
-import { environment } from 'src/environments/environment.prod';
-
+import { environment } from 'src/environments/environment';
 const AUTH_API = environment.auth_api;
 
 const httpOptions = {
