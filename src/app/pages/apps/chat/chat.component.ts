@@ -80,10 +80,11 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
       this._this.chatMessagesData.push(data)
     });
 
-    this.signalrService.connection.on('ToMe', (data: any) => {
-      data.align = 'right',
-      this._this.chatMessagesData.push(data)
-    });
+    // this.signalrService.connection.on('ToMe', (data: any) => {
+    //   debugger
+    //   data.align = 'right',
+    //   this._this.chatMessagesData.push(data)
+    // });
   }
 
   ngAfterViewInit() {
@@ -101,13 +102,13 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
     var param = {
       receiver_Id: receiveId
     }
-    this.chatMessagesData = await this.chatService.postInfoMessenger(environment.api_url+'/Messenger/InfoMessenger', param).toPromise();
+    this.chatMessagesData = await this.chatService.postInfoMessenger('/Messenger/InfoMessenger', param).toPromise();
   }
 
   // hainh2
   // Trước hết là lấy tất cả dữ liệu trong user
   async getChatData() {
-    this.chatData = await this.chatService.getAll(environment.api_url + '/User/GetAll').toPromise();
+    this.chatData = await this.chatService.getAll('/User/GetAll').toPromise();
   }
 
   onListScroll() {
@@ -167,7 +168,7 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
         // Message Push in Chat
         this.chatMessagesData.push(messenger);
         // lưu messenge vào csdl
-        this.chatService.postInsertMessenger(environment.api_url+'/Messenger/InsertMessenger', messenger).subscribe(
+        this.chatService.postInsertMessenger('/Messenger/InsertMessenger', messenger).subscribe(
           (res : any)  => {
               if(res.response > 0) {
                 this.signalrService.connection

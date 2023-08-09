@@ -7,18 +7,19 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
+import { AuthenticationService } from "../services/auth.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(
-  ) {}
+  constructor(private authenticationService: AuthenticationService,private router: Router) { }
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!request.url.includes('assets')) {
-      const authToken = localStorage.getItem('token');
+    const authToken = localStorage.getItem('token');
+    if (!request.url.includes('HubSignalR') && !request.url.includes('Auth/signin')) {
       if (authToken) {
         request = request.clone({
           url: environment.api_url + request.url,
@@ -27,11 +28,11 @@ export class JwtInterceptor implements HttpInterceptor {
           }
         });
       } else {
-        request = request.clone({
-          url: environment.api_url + request.url
-        });
+        this.authenticationService.logout();
+        this.router.navigate(['/auth/login']);
+        return new Observable<any>(() => {});
       }
-    }
+  }
     return next.handle(request);
   }
 }

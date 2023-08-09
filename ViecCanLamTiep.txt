@@ -1,0 +1,4 @@
+- Kiểm tra signarR chạy ổn hay ko
+- tìm hiểu a Hoàn làm signarR như nào làm theo xem cái nào chạy tốt
+- chat xem có ổn không
+- kiểm tra lại signar trên môi trường product tại sao không chạy

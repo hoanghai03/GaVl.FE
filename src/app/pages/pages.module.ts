@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  NgbToastModule, NgbProgressbarModule
+  NgbToastModule
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { FlatpickrModule } from 'angularx-flatpickr';
@@ -24,8 +24,6 @@ import lottie from 'lottie-web';
 // Pages Routing
 import { PagesRoutingModule } from "./pages-routing.module";
 import { AppsModule } from "./apps/apps.module";
-import { LanguageService } from '../core/services/language.service';
-import { TranslateService } from '@ngx-translate/core';
 
 import { QRCodeModule } from 'angular2-qrcode';
 
@@ -48,7 +46,8 @@ import { QRCodeModule } from 'angular2-qrcode';
     QRCodeModule,
     AppsModule,
   ],
-  providers:[]
+  providers: [
+  ],
 })
 export class PagesModule { 
   constructor() {

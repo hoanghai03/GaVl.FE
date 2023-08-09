@@ -5,6 +5,7 @@ import {
   LAYOUT_VERTICAL, LAYOUT_HORIZONTAL, LAYOUT_TWOCOLUMN, LAYOUT_MODE, LAYOUT_WIDTH,
   LAYOUT_POSITION, SIDEBAR_SIZE, SIDEBAR_COLOR, TOPBAR
 } from './layout.model';
+import { SignalRService } from '../services/signalR.service';
 
 @Component({
   selector: 'app-layout',
@@ -19,7 +20,9 @@ export class LayoutComponent implements OnInit {
 
   layoutType!: string;
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService,private signalRService : SignalRService) {
+    this.signalRService.initiateSignalrConnection()
+   }
 
   ngOnInit(): void {
     this.layoutType = LAYOUT_TWOCOLUMN;

@@ -11,7 +11,6 @@ import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { SignalRService } from "./services/signalR.service";
 import { JwtInterceptor } from "./core/helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./core/helpers/error.interceptor";
 
@@ -41,14 +40,6 @@ export function createTranslateLoader(http: HttpClient): any {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    SignalRService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (signalrService: SignalRService) => () =>
-        signalrService.initiateSignalrConnection(),
-      deps: [SignalRService],
-      multi: true,
-    },
   ],
 
   bootstrap: [AppComponent],

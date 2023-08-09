@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject } from "rxjs";
 import { environment } from "src/environments/environment";
 var token = `${localStorage.getItem('token')}`;
 @Injectable({
@@ -8,13 +7,9 @@ var token = `${localStorage.getItem('token')}`;
 })
 export class SignalRService {
     connection: any;
-  progressPercentage: BehaviorSubject<number>;
-  progressMessage: BehaviorSubject<string>;
 
   constructor() {
     this.connection = null;
-    this.progressPercentage = new BehaviorSubject<number>(0);
-    this.progressMessage = new BehaviorSubject<string>("");
   }
 
   // Establish a connection to the SignalR server hub

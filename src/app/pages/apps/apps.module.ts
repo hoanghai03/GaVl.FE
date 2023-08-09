@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -59,6 +59,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { GenQrComponent } from './gen-qr/gen-qr.component';
 import { QRCodeModule } from 'angular2-qrcode';
+import { SignalRService } from 'src/app/services/signalR.service';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,13 @@ import { QRCodeModule } from 'angular2-qrcode';
   ],
   providers: [
     DatePipe,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (signalrService: SignalRService) => () =>
+        signalrService.initiateSignalrConnection(),
+      deps: [SignalRService],
+      multi: true,
+    },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
