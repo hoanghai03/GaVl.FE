@@ -192,7 +192,11 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
   chatUsername(receiveId: number,name: string) {
     this.username = name;
     this.receiveId = receiveId.toString();
-    this.getInfoMessenger(receiveId);    
+    this.getInfoMessenger(receiveId); 
+    const userChatShow = document.querySelector('.user-chat');
+    if(userChatShow != null){
+      userChatShow.classList.add('user-chat-show');
+    }   
   }
 
   scrollMessenger() {

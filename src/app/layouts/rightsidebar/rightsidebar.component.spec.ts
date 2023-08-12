@@ -6,10 +6,14 @@ describe('RightsidebarComponent', () => {
   let component: RightsidebarComponent;
   let fixture: ComponentFixture<RightsidebarComponent>;
 
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ RightsidebarComponent ]
+    })
+    .compileComponents();
+  });
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [RightsidebarComponent]
-    });
     fixture = TestBed.createComponent(RightsidebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -14,9 +14,11 @@ import { LanguageService } from '../core/services/language.service';
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { TwoColumnComponent } from './two-column/two-column.component';
 import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sidebar.component';
+import { VerticalComponent } from './vertical/vertical.component';
 
 @NgModule({
   declarations: [ 
+    VerticalComponent,
     FooterComponent,
     SidebarComponent,
     TopbarComponent,
