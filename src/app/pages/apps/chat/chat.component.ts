@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, TemplateRef, AfterViewInit, OnChanges, DoCheck } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, AfterViewInit, DoCheck } from '@angular/core';
 import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
-import { GroupUser, ChatUser, ContactModel } from './chat.model';
-import { groupData, chatData, contactData } from './data';
+import { GroupUser, ContactModel } from './chat.model';
+import { groupData } from './data';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 // Date Format
@@ -11,7 +11,6 @@ import { DatePipe } from '@angular/common';
 import { Lightbox } from 'ngx-lightbox';
 import { ChatService } from 'src/app/services/product/chat.service';
 import { SignalRService } from 'src/app/services/signalR.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -77,14 +76,9 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
     this.onListScroll();
 
     this.signalrService.connection.on('DisplayMessage', (data: any) => {
-      this._this.chatMessagesData.push(data)
+      this._this.chatMessagesData.push(data);
+      this.onListScroll();
     });
-
-    // this.signalrService.connection.on('ToMe', (data: any) => {
-    //   debugger
-    //   data.align = 'right',
-    //   this._this.chatMessagesData.push(data)
-    // });
   }
 
   ngAfterViewInit() {
@@ -94,7 +88,6 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
   // Chat Data Fetch
   async _fetchData() {
     this.groupData = groupData;
-    this.contactData = contactData;
   }
 
   // hainh2

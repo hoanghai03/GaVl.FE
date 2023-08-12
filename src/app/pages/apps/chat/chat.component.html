@@ -54,7 +54,7 @@
                                                     <img src="{{data.profile}}" class="rounded-circle img-fluid userprofile" alt="">
                                                 </div>
                                                 <div class="avatar-xxs" *ngIf="!data.profile">
-                                                    <span class="avatar-title rounded-circle bg-danger userprofile">{{ data.fullname.charAt(0) }}</span>
+                                                    <span class="avatar-title rounded-circle bg-danger userprofile">{{ data.fullname }}</span>
                                                 </div>
                                                 <span class="user-status"></span>
                                             </div>
@@ -107,49 +107,6 @@
                             </ul>
                         </div>
                         <!-- End chat-message-list -->
-                    </ngx-simplebar>
-                </ng-template>
-            </li>
-            <li class="nav-item" [ngbNavItem]="2">
-                <a ngbNavLink class="nav-link " data-bs-toggle="tab" href="javascript:void(0);" role="tab">
-                    Contacts
-                </a>
-                <ng-template ngbNavContent>
-                    <ngx-simplebar class="chat-room-list pt-3">            
-                        <div class="sort-contact">
-                            <div class="mt-3" *ngFor="let data of contactData">
-                                    <div class="contact-list-title">{{data.title}}</div>
-                                    <ul id="contact-sort-A" class="list-unstyled contact-list">
-                                        <li *ngFor="let data of data.contacts" (click)="chatUsername(1,data.name)">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <div class="avatar-xxs" *ngIf="data.profile">
-                                                        <img src="{{data.profile}}" class="rounded-circle img-fluid userprofile" alt="">
-                                                    </div>
-                                                    <div class="avatar-xxs" *ngIf="!data.profile">
-                                                        <span class="avatar-title rounded-circle bg-primary fs-10">{{data.name.charAt(0)}}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <p class="text-truncate contactlist-name mb-0">{{data.name}}</p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <div class="dropdown" ngbDropdown >
-                                                        <a href="javascript:void(0);" class="text-muted arrow-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-                                                            <i class="ri-more-2-fill"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-end" style="" ngbDropdownMenu >
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i class="ri-pencil-line text-muted me-2 align-bottom"></i>Edit</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i class="ri-forbid-2-line text-muted me-2 align-bottom"></i>Block</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);" (click)="delete($event)"><i class="ri-delete-bin-6-line text-muted me-2 align-bottom"></i>Remove</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                     </ngx-simplebar>
                 </ng-template>
             </li>
