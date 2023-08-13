@@ -79,6 +79,11 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
       this._this.chatMessagesData.push(data);
       this.onListScroll();
     });
+    this.signalrService.connection.on('ToMe', (data: any) => {
+      data.align = 'right',
+      this._this.chatMessagesData.push(data)
+      this.onListScroll();
+    });
   }
 
   ngAfterViewInit() {
@@ -102,6 +107,9 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
   // Trước hết là lấy tất cả dữ liệu trong user
   async getChatData() {
     this.chatData = await this.chatService.getAll('/User/GetAll').toPromise();
+    if(this.chatData.length > 0) {
+      this.showChatFirst(this.chatData[0].id,this.chatData[0].fullname)
+    }
   }
 
   onListScroll() {
@@ -197,6 +205,15 @@ export class ChatComponent implements OnInit,AfterViewInit,DoCheck {
     if(userChatShow != null){
       userChatShow.classList.add('user-chat-show');
     }   
+  }
+
+  /***
+  * hiển thị chat với user đầu tiên
+  */
+  showChatFirst(receiveId: number,name: string) {
+    this.username = name;
+    this.receiveId = receiveId.toString();
+    this.getInfoMessenger(receiveId); 
   }
 
   scrollMessenger() {

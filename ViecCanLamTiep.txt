@@ -1,6 +1,6 @@
 - tin nhắn từ nơi khác đến mặc định phải tự hiện ở cuối  ===> ok roi
-- css lại tin nhắn có thể xem ở điện thoại
-- mới vào mặc định hiển thị tin nhắn của người đầu tiên
+- css lại tin nhắn có thể xem ở điện thoại       ===> ok roi
+- mới vào mặc định hiển thị tin nhắn của người đầu tiên  ===> ok roi
 - nhắn tin phải có thông báo tự hiện đến, có tiếng 
 
 
